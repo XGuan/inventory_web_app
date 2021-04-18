@@ -8,7 +8,7 @@ import User from '../models/userModel.js'
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
-
+  console.log('in auth')
   const user = await User.findOne({ email: email })
 
   if (user && (await user.matchPassword(password))) {

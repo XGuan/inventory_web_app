@@ -2,6 +2,7 @@ import path from 'path'
 import express from 'express'
 import dotenv from 'dotenv'
 import colors from 'colors'
+import connectDB from './config/db.js'
 
 import userRoutes from './routes/userRoutes.js'
 
@@ -13,12 +14,11 @@ if (process.env.NODE_ENV !== 'production') {
   })
 }
 
-// connectDB()
+connectDB()
 
 const app = express()
-
+app.use(express.json())
 app.use('/api/users', userRoutes)
-// app.use(express.json())
 
 app.get('/ping', (req, res) => res.send('ok'))
 
