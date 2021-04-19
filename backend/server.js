@@ -5,6 +5,7 @@ import colors from 'colors'
 import connectDB from './config/db.js'
 
 import userRoutes from './routes/userRoutes.js'
+import storageRoutes from './routes/storageRoutes.js'
 
 const __dirname = path.resolve()
 
@@ -19,6 +20,7 @@ connectDB()
 const app = express()
 app.use(express.json())
 app.use('/api/users', userRoutes)
+app.use('/api/storage', storageRoutes)
 
 app.get('/ping', (req, res) => res.send('ok'))
 
