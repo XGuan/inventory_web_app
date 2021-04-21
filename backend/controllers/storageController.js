@@ -5,7 +5,7 @@ import Storage from '../models/storageModel.js'
 // @route GET /api/storage
 // @access Public
 const getAllStorage = asyncHandler(async (req, res) => {
-  const allStorage = await Product.find({ user: req.user._id })
+  const allStorage = await Storage.find({ createdBy: req.user._id })
   res.json(allStorage)
 })
 

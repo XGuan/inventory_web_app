@@ -15,6 +15,7 @@ const HomeScreen = () => {
   return (
     <>
       <Row>
+        debugger
         {storageList.map((storageName) => (
           <Col className='m-3' key={storageName} sm={12} lg={4} xl={3}>
             <Storage storageName={storageName} />
