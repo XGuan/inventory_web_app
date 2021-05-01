@@ -16,7 +16,7 @@ const LoginScreen = ({ history }) => {
   const { loading, error, userInfo } = userLogin
 
   // const rediret = location.search ? location.search.split('=')[1] : '/'
-  //   debugger
+  // debugger
   useEffect(() => {
     if (userInfo) {
       history.push('/home')

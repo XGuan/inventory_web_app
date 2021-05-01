@@ -1,27 +1,44 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Row, Col, Button } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 import Storage from '../components/Storage'
 import CreateStorageModal from '../components/CreateStorageModal'
+import Loader from '../components/Loader'
+import Message from '../components/Message'
+import { getAllStorage } from '../actions/storageActions'
 
 const HomeScreen = () => {
-  const [storageList, setStorageList] = useState(['Basement', 'Garderob'])
   const [modalShow, setModalShow] = useState(false)
-  //   const [storageInfo, setStorageInfo] = useState({})
 
-  const createStorage = (storage) => {
-    setStorageList([...storageList, storage])
-  }
+  const dispatch = useDispatch()
+
+  const storageState = useSelector((state) => state.storageList)
+  const { loading, error, storageList } = storageState
+
+  // const createStorage = (storage) => {
+  //   setStorageList([...allStorage, storage])
+  // }
+
+  useEffect(() => {
+    dispatch(getAllStorage())
+  }, [dispatch])
 
   return (
     <>
-      <Row>
-        debugger
-        {storageList.map((storageName) => (
-          <Col className='m-3' key={storageName} sm={12} lg={4} xl={3}>
-            <Storage storageName={storageName} />
-          </Col>
-        ))}
-      </Row>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant='danger'>{error}</Message>
+      ) : (
+        <Row>
+          {storageList.map((storage) => (
+            <Col className='m-3' key={storage._id} sm={12} lg={4} xl={3}>
+              <Storage storageName={storage.name} />
+            </Col>
+          ))}
+        </Row>
+      )}
+
       <Row>
         <Col md={{ span: 3, offset: 9 }}>
           <Button
@@ -35,7 +52,7 @@ const HomeScreen = () => {
           <CreateStorageModal
             show={modalShow}
             onHide={() => setModalShow(false)}
-            onStorageInfo={createStorage}
+            // onStorageInfo={createStorage}
           />
         </Col>
       </Row>
